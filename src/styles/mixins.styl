@@ -1,0 +1,22 @@
+no-select() {
+    user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+}
+
+vendor(prop, args) {
+    -webkit-{prop} args;
+    -moz-{prop} args;
+    -o-{prop} args;
+    {prop} args;
+}
+
+uppercase() {
+    text-transform: uppercase;
+}
+
+capitalize() {
+    text-transform: capitalize;
+}

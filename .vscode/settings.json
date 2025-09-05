@@ -1,0 +1,48 @@
+{
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "eslint.debug": false,
+  "eslint.enable": true,
+  "eslint.format.enable": true,
+  "eslint.nodePath": ".yarn/sdks",
+  "eslint.quiet": false,
+  "eslint.useFlatConfig": true,
+  "eslint.validate": [
+    "json",
+    "jsonc"
+  ],
+  "npm.packageManager": "yarn",
+  "prettier.enable": true,
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
+  "search.exclude": {
+    "**/.pnp.*": true,
+    "**/.yarn": true,
+    "**/yarn.lock": true
+  },
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.format.enable": true,
+  "typescript.tsdk": ".yarn/sdks/typescript/lib"
+}

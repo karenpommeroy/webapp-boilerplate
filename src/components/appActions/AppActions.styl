@@ -1,0 +1,36 @@
+@import "../../styles/mixins.styl";
+
+.app-actions {
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    justify-items: center;
+    justify-content: center;
+    justify-self: center;
+    align-items: center;
+    align-content: center;
+
+    .icon {
+        margin-right: 0px;
+        padding: 0;
+
+        svg {
+            width: 1.4em;
+            height: 1.4em;
+        }
+
+        &.help {
+            opacity: .5;
+            vendor("transition", opacity .25s ease-in-out);
+            
+            &:hover {
+                opacity: 1;
+            }
+
+            &.active {
+                opacity: 1;
+            }
+        }
+    }
+}

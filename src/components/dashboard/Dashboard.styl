@@ -1,0 +1,19 @@
+.dashboard {
+    :global(.MuiListItem-root) {
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+
+    :global(.MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular) {
+        margin-right: 0;
+    }
+
+    &.no-collapse {
+       :global(.MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular) {
+        
+            div[aria-label="Expand menu"] {
+                display: none;
+            }
+        }
+    }
+}

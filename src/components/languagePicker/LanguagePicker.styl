@@ -1,0 +1,42 @@
+@import "../../styles/mixins.styl"
+
+.language-picker {
+    position: relative;
+
+    .language-picker-menu {
+        opacity: 1;
+    }
+
+    .language-picker-trigger {
+        border-radius: 0;
+        height: 100%;
+        width: 100%;
+        min-width: 5px;
+        padding: 0;
+
+        &.minimal {
+            border-radius: 50%;
+        }
+    }
+      
+    .language-picker-item {
+        height: 100%;
+        width: 100%;
+    }
+
+    .icon {
+        display: inline-block;
+        vertical-align: middle;
+        width: 2.1em;
+        height: 2.1em;
+        background-size: 3em 3em;
+        background-position: 50% 50%;
+        border-radius: 50%;
+        border-width: 0.05em;
+        border-style: solid;
+    }
+
+    .name {
+        padding-left: .5em;
+    }
+}
