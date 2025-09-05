@@ -1,0 +1,12 @@
+{
+  "tasks": [
+    {
+      "detail": "rimraf dist",
+      "label": "npm: clean",
+      "problemMatcher": [],
+      "script": "clean",
+      "type": "npm"
+    }
+  ],
+  "version": "2.0.0"
+}
