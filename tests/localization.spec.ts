@@ -17,7 +17,7 @@ test("changes languages correctly", async ({page}) => {
     for (const lang of languages) {
         await languagePickerTriggerEl.click();
         await languagePickerEl.locator(`[role="menu"] [role="menuitem"][data-id="${lang}"]`).click();
-        await expect(languagePickerEl.locator('[role="menu"]')).toBeHidden();
+        await expect(languagePickerEl.locator("[role='menu']")).toBeHidden();
         await expect(appEl).toHaveAttribute("lang", lang);
         await expect(languagePickerTriggerEl.locator(`[style*="/${lang}/flag.svg"]`)).toBeVisible();
     }
@@ -30,7 +30,7 @@ test("click away closes language menu", async ({page}) => {
     const languagePickerTriggerEl = page.getByTestId("language-picker-trigger");
 
     await languagePickerTriggerEl.click();
-    await expect(languagePickerEl.locator('[role="menu"]')).toBeVisible();
+    await expect(languagePickerEl.locator("[role='menu']")).toBeVisible();
     await page.mouse.click(0, 0);
-    await expect(languagePickerEl.locator('[role="menu"]')).toBeHidden();
+    await expect(languagePickerEl.locator("[role='menu']")).toBeHidden();
 });

@@ -25,7 +25,7 @@ const compat = new FlatCompat({
 const config: Linter.Config[] = [
     ...compat.extends("eslint:recommended"),
     {
-        ignores: ["./.yarn/", "node_modules/", "/dist", ".pnp.*"],
+        ignores: ["./.yarn/", "node_modules/", "/dist", ".pnp.*", "prettier.config.js"],
     },
     {
         files: ["**/*.ts", "**/*.tsx"],
@@ -72,7 +72,7 @@ const config: Linter.Config[] = [
             "@stylistic/quotes": ["error", "double"],
             "@stylistic/semi": ["warn", "always"],
             "@stylistic/linebreak-style": ["warn", "windows"],
-            "@stylistic/max-len": ["warn", {code: 120}],
+            "@stylistic/max-len": ["warn", {code: 160}],
             "@stylistic/function-paren-newline": "off",
             "@stylistic/function-call-argument-newline": "off",
             "@typescript-eslint/no-unused-vars": "off",

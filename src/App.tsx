@@ -48,12 +48,7 @@ export const App: React.FC = () => {
                 <CssBaseline enableColorScheme />
                 <Outlet />
             </Box>
-            <Popper
-                className={Styles.helpPopup}
-                open={Boolean(anchorEl)}
-                anchorEl={anchorEl}
-                disablePortal
-                data-testid="help-tooltip">
+            <Popper className={Styles.helpPopup} open={Boolean(anchorEl)} anchorEl={anchorEl} disablePortal data-testid="help-tooltip">
                 <Paper sx={{p: 2}}>
                     <Typography className={Styles.header} color="textSecondary" data-testid="help-header">
                         {help.header}
@@ -63,11 +58,7 @@ export const App: React.FC = () => {
                     </Typography>
                 </Paper>
             </Popper>
-            <div
-                id="test-props"
-                style={{display: "none"}}
-                data-languages={JSON.stringify(without(i18n.options.supportedLngs as string[], "cimode"))}
-            />
+            <div id="test-props" style={{display: "none"}} data-languages={JSON.stringify(without(i18n.options.supportedLngs as string[], "cimode"))} />
         </ReactRouterAppProvider>
     );
 };

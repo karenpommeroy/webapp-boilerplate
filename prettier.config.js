@@ -1,11 +1,9 @@
-const { use } = require("react");
-
 module.exports = {
     tabWidth: 4,
     useTabs: false,
     singleQuote: false,
     trailingComma: "es5",
-    printWidth: 120,
+    printWidth: 160,
     semi: true,
 
     overrides: [

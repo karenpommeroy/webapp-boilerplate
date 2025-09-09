@@ -1,7 +1,7 @@
-import { Dispatch } from "react";
+import {Dispatch} from "react";
 
-import { ColorMode } from "../../common/Theme";
-import { IAction } from "./Action";
+import {ColorMode} from "../../common/Theme";
+import {IAction} from "./Action";
 
 export enum AppActions {
     SetLocation = "SET_LOCATION",
@@ -20,9 +20,9 @@ export interface IAppAction extends IAction<AppActions> {
 }
 
 export const actions = (dispatch: Dispatch<IAppAction>) => ({
-    setLocation: (location: string) => dispatch({ type: AppActions.SetLocation, location }),
-    setTheme: (theme: string) => dispatch({ type: AppActions.SetTheme, theme }),
-    setMode: (mode: ColorMode) => dispatch({ type: AppActions.SetMode, mode }),
-    setLoading: (loading: boolean) => dispatch({ type: AppActions.SetLoading, loading }),
-    setHelp: (help: boolean) => dispatch({ type: AppActions.SetHelp, help }),
+    setLocation: (location: string) => dispatch({type: AppActions.SetLocation, location}),
+    setTheme: (theme: string) => dispatch({type: AppActions.SetTheme, theme}),
+    setMode: (mode: ColorMode) => dispatch({type: AppActions.SetMode, mode}),
+    setLoading: (loading: boolean) => dispatch({type: AppActions.SetLoading, loading}),
+    setHelp: (help: boolean) => dispatch({type: AppActions.SetHelp, help}),
 });

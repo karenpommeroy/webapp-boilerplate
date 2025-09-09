@@ -3,21 +3,13 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import i18nextBackend from "i18next-http-backend";
 import {initReactI18next} from "react-i18next";
 
-const isMac = process.platform === "darwin";
-// const prependPath = isMac && !isDevelopment() ? path.join("./assets", "..") : ".";
-// const localePath = replace(
-//     !isDevelopment() ? path.join("./assets", "locales") : path.join(__dirname, "assets", "locales"),
-//     /\\/g,
-//     "/"
-// );
-
 i18next
     .use(LanguageDetector)
     .use(i18nextBackend)
     .use(initReactI18next)
     .init({
         backend: {
-            loadPath: "../" + "./assets/locales/{{lng}}/{{ns}}.json",
+            loadPath: "../assets/locales/{{lng}}/{{ns}}.json",
         },
         detection: {
             order: ["querystring", "cookie", "localStorage", "navigator"],

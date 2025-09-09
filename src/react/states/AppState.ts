@@ -1,5 +1,5 @@
-import { ColorMode } from "../../common/Theme";
-import { StateCreator } from "./State";
+import {ColorMode} from "../../common/Theme";
+import {StateCreator} from "./State";
 
 export interface IAppState {
     location?: string;

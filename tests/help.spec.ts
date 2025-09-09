@@ -29,7 +29,7 @@ test("shows help tooltip correctly", async ({page}) => {
     await page.goto("/");
 
     const helpToggleEl = page.getByTestId("help-toggle");
-    const helpEl = page.locator('[data-help="languagePicker"]');
+    const helpEl = page.locator("[data-help='languagePicker']");
 
     await helpToggleEl.click();
     await helpEl.click();

@@ -1,29 +1,14 @@
 import classNames from "classnames";
-import $_ from "lodash-es";
+import {defaultTo, get, isEqual, map, without} from "lodash-es";
 import moment from "moment";
-import path from "path";
 import React, {HTMLAttributes, useState} from "react";
 import {useTranslation} from "react-i18next";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import {
-    Box,
-    BoxProps,
-    Button,
-    CircularProgress,
-    ClickAwayListener,
-    Menu,
-    MenuItem,
-    Theme,
-    useMediaQuery,
-} from "@mui/material";
+import {Box, BoxProps, Button, CircularProgress, ClickAwayListener, Menu, MenuItem, Theme, useMediaQuery} from "@mui/material";
 
 import {ComponentDisplayMode} from "../../common/ComponentDisplayMode";
 import Styles from "./LanguagePicker.styl";
-
-const isMac = process.platform === "darwin";
-const isDev = process.env.NODE_ENV === "development";
-const prependPath = isMac && !isDev ? path.join("/assets", "..") : ".";
 
 export type LanguagePickerProps = Omit<HTMLAttributes<HTMLDivElement> & BoxProps, "onClick"> & {
     className?: string;
@@ -47,13 +32,11 @@ export const LanguagePicker = (props: LanguagePickerProps) => {
     const {i18n} = useTranslation();
     const [loading, setLoading] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const langs = $_.get(i18n, "options.supportedLngs");
-    const availableLocales: string[] = !langs ? [] : $_.without(langs, "cimode").sort();
-    const displayMode = $_.defaultTo(
+    const langs = get(i18n, "options.supportedLngs");
+    const availableLocales: string[] = !langs ? [] : without(langs, "cimode").sort();
+    const displayMode = defaultTo(
         mode,
-        useMediaQuery((theme: Theme) => theme.breakpoints.down("md"))
-            ? ComponentDisplayMode.Minimal
-            : ComponentDisplayMode.Full
+        useMediaQuery((theme: Theme) => theme.breakpoints.down("md")) ? ComponentDisplayMode.Minimal : ComponentDisplayMode.Full
     );
 
     const onClose = () => setAnchorEl(null);
@@ -67,7 +50,7 @@ export const LanguagePicker = (props: LanguagePickerProps) => {
     const onTriggerClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
 
     const onItemClick = async (lang: string) => {
-        if (!$_.isEqual(lang, i18n.language)) {
+        if (!isEqual(lang, i18n.language)) {
             setLoading(true);
             i18n.changeLanguage(lang, () => setLoading(false));
             moment.locale(lang);
@@ -79,12 +62,7 @@ export const LanguagePicker = (props: LanguagePickerProps) => {
 
     return (
         <Box className={classNames(Styles.languagePicker, className)} {...rest}>
-            <LanguagePickerTrigger
-                showArrow={showArrow}
-                mode={displayMode}
-                loading={loading}
-                onClick={onTriggerClick}
-            />
+            <LanguagePickerTrigger showArrow={showArrow} mode={displayMode} loading={loading} onClick={onTriggerClick} />
             <ClickAwayListener onClickAway={onClickAway}>
                 <Menu
                     anchorEl={anchorEl}
@@ -94,7 +72,7 @@ export const LanguagePicker = (props: LanguagePickerProps) => {
                     transformOrigin={{vertical: -40, horizontal: "center"}}
                     open={Boolean(anchorEl)}
                     onClose={onClose}>
-                    {$_.map(availableLocales, (item) => (
+                    {map(availableLocales, (item) => (
                         <LanguagePickerItem key={item} lang={item} onClick={onItemClick} mode={displayMode} />
                     ))}
                 </Menu>
@@ -121,7 +99,7 @@ export const LanguagePickerTrigger = (props: LanguagePickerTriggerProps) => {
             <span
                 className={Styles.icon}
                 style={{
-                    backgroundImage: `url("${prependPath}/assets/locales/${i18n.language}/flag.svg")`,
+                    backgroundImage: `url("assets/locales/${i18n.language}/flag.svg")`,
                 }}
             />
             {mode > ComponentDisplayMode.Compact && (
@@ -144,7 +122,7 @@ export const LanguagePickerItem = (props: LanguagePickerItemProps) => {
             <span
                 className={Styles.icon}
                 style={{
-                    backgroundImage: `url("${prependPath}/assets/locales/${lang}/flag.svg")`,
+                    backgroundImage: `url("assets/locales/${lang}/flag.svg")`,
                 }}
             />
             <span className={classNames("capitalize", Styles.name)}>{t("langName", {lng: lang})}</span>

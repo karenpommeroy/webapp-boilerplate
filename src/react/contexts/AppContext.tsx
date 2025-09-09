@@ -1,9 +1,9 @@
-import React, { createContext, FC, ReactNode, useReducer } from "react";
+import React, {createContext, FC, ReactNode, useReducer} from "react";
 
-import { ColorMode } from "../../common/Theme";
-import { actions } from "../actions/AppActions";
+import {ColorMode} from "../../common/Theme";
+import {actions} from "../actions/AppActions";
 import reducer from "../reducers/AppReducer";
-import { createDefaultState, IAppState } from "../states/AppState";
+import {createDefaultState, IAppState} from "../states/AppState";
 
 interface IAppContext {
     state: IAppState;
@@ -26,8 +26,8 @@ export const AppContextProvider: FC<IAppContextProviderProps> = (props: any) => 
     const [reducerState, dispatch] = useReducer(reducer, createDefaultState());
     const reducerActions = actions(dispatch);
     const context: IAppContext = {
-        state: { ...reducerState },
-        actions: { ...reducerActions },
+        state: {...reducerState},
+        actions: {...reducerActions},
     };
 
     return <AppContext.Provider value={context}>{props.children}</AppContext.Provider>;

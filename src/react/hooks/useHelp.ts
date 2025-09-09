@@ -1,5 +1,4 @@
-import _toInteger from "lodash-es/toInteger";
-import _toString from "lodash-es/toString";
+import {toInteger, toString} from "lodash-es";
 import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 
@@ -67,7 +66,7 @@ const useHelp = () => {
         clone.style.position = "fixed";
         clone.style.left = bbox.x - clone.offsetLeft + "px";
         clone.style.top = bbox.y - clone.offsetTop + "px";
-        clone.style.zIndex = _toString(zIndex + 1);
+        clone.style.zIndex = toString(zIndex + 1);
 
         return clone;
     };
@@ -85,12 +84,10 @@ const useHelp = () => {
         }
 
         const header = t(helpId + "Header", {ns: "help"});
-        const content: string | string[] = t(helpId + "Content", {ns: "help", returnObjects: true}) as
-            | string
-            | string[];
+        const content: string | string[] = t(helpId + "Content", {ns: "help", returnObjects: true}) as string | string[];
 
         const backdropElement = createBackdropElement();
-        const anchorElement = createAnchorElement(elementHelp, _toInteger(backdropElement.style.zIndex));
+        const anchorElement = createAnchorElement(elementHelp, toInteger(backdropElement.style.zIndex));
 
         setBackdropEl(backdropElement);
         setAnchorEl(anchorElement);

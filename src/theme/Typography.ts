@@ -1,4 +1,4 @@
-import { createTheme, TypographyVariantsOptions } from "@mui/material/styles";
+import {createTheme, TypographyVariantsOptions} from "@mui/material/styles";
 
 const defaultTheme = createTheme();
 

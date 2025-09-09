@@ -45,13 +45,7 @@ export const webpackConfig: Configuration & DevServerConfiguration = {
                         },
                     },
                 ],
-                exclude: [
-                    /\.(test|spec|)\.ts$/,
-                    /node_modules$/,
-                    /[\\/]node_modules[\\/]$/,
-                    /\.yarn$/,
-                    /[\\/]\.yarn[\\/]$/,
-                ],
+                exclude: [/\.(test|spec|)\.ts$/, /node_modules$/, /[\\/]node_modules[\\/]$/, /\.yarn$/, /[\\/]\.yarn[\\/]$/],
             },
             {
                 test: /\.js$/,
@@ -177,12 +171,7 @@ export const webpackConfig: Configuration & DevServerConfiguration = {
             publicPath: "/",
             watch: {
                 aggregateTimeout: 500,
-                ignored: [
-                    ".yarn/**/*",
-                    /node_modules\/(?!@core)/,
-                    "node_modules/@core/**/node_modules/**/*",
-                    /assets\/locales\/__.*\.json/,
-                ],
+                ignored: [".yarn/**/*", /node_modules\/(?!@core)/, "node_modules/@core/**/node_modules/**/*", /assets\/locales\/__.*\.json/],
             },
         },
 

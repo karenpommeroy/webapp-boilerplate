@@ -1,6 +1,6 @@
-import { alpha, ColorSystemOptions, PaletteMode } from "@mui/material";
+import {alpha, ColorSystemOptions, PaletteMode} from "@mui/material";
 
-import { Blue, Color, Gray, Green, Orange, Red } from "./Colors";
+import {Blue, Color, Gray, Green, Orange, Red} from "./Colors";
 
 export type ThemeColorScheme = {
     primary: Color;
@@ -167,7 +167,7 @@ export const getThemeColorSystem = (name: string, mode: PaletteMode): ColorSyste
     };
 };
 
-export const ThemeColorSchemes: { [key: string]: ThemeColorScheme } = {
+export const ThemeColorSchemes: {[key: string]: ThemeColorScheme} = {
     Sky: {
         primary: SlateBlue,
         secondary: Purple,

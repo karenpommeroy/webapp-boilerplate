@@ -1,4 +1,4 @@
-import { CommonColors } from "@mui/material";
+import {CommonColors} from "@mui/material";
 
 export interface Color {
     50: string;

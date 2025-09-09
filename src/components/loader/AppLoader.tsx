@@ -8,9 +8,7 @@ export interface AppLoaderProps {
     imageSrc?: string;
 }
 
-export const AppLoader = (
-    props: AppLoaderProps = {width: 180, height: 180, imageSrc: "/assets/images/loading.svg"}
-) => {
+export const AppLoader = (props: AppLoaderProps = {width: 180, height: 180, imageSrc: "/assets/images/loading.svg"}) => {
     const {width, height, imageSrc} = props;
 
     return (
