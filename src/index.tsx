@@ -1,58 +1,50 @@
 import moment from "moment";
 import momentDurationFormat from "moment-duration-format";
-import React from "react";
-import { createRoot } from "react-dom/client";
-import { I18nextProvider } from "react-i18next";
-import { createHashRouter, RouterProvider } from "react-router-dom";
+import {createRoot} from "react-dom/client";
+import {I18nextProvider} from "react-i18next";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
 import App from "./App";
+import {getConfiguration, IConfiguration} from "./common/Config";
 import Dashboard from "./components/dashboard/Dashboard";
 import createLoader from "./components/loader/AppLoader";
-import i18n from "./i18next";
-import { getRoutes } from "./Navigation";
-import { AppContextProvider } from "./react/contexts/AppContext";
+import i18next from "./i18next";
+import {getRoutes} from "./Navigation";
+import {AppContextProvider} from "./react/contexts/AppContext";
+import {SettingsProvider} from "./react/contexts/SettingsContext";
 
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 
-const renderApplication = async (Component: React.FC) => {
+const renderApplication = async (config: IConfiguration) => {
     momentDurationFormat(moment as any);
+    moment.updateLocale(i18next.language, {week: {dow: 1}});
 
-    moment.updateLocale("en", { week: { dow: 1 } });
-
-    i18n.changeLanguage("en");
-
-    const router = createHashRouter([
+    const router = createBrowserRouter([
         {
             Component: App,
-            children: [{ path: "/", Component: Dashboard, children: getRoutes() }],
+            children: [{path: "/", Component: Dashboard, children: getRoutes()}],
         },
     ]);
 
     root.render(
-        <AppContextProvider>
-            <I18nextProvider i18n={i18n}>
-                <RouterProvider router={router}>
-                    <Component />
-                </RouterProvider>
-            </I18nextProvider>
-        </AppContextProvider>
+        <SettingsProvider config={config}>
+            <AppContextProvider>
+                <I18nextProvider i18n={i18next}>
+                    <RouterProvider router={router} />
+                </I18nextProvider>
+            </AppContextProvider>
+        </SettingsProvider>
     );
 };
 
 export const run = async () => {
     root.render(createLoader());
-    // const config = await getConfiguration<IConfiguration>("/config.json");
-    // const locales = (await i18nReady()) as any;
+    const config = await getConfiguration<IConfiguration>("/config.json");
 
-    // renderApplication(App, config, locales);
-
-    if (module.hot) {
-        // module.hot.accept("./App", () => {
-        const NextApp = React.lazy(() => import("./App"));
-        renderApplication(NextApp);
-        // });
-    }
+    setTimeout(() => {
+        renderApplication(config);
+    }, 100);
 };
 
 run();

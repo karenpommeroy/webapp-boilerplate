@@ -1,35 +1,33 @@
 import classNames from "classnames";
 import React from "react";
-import { Outlet } from "react-router-dom";
+import {Outlet} from "react-router-dom";
 
-import { NavigationPageItem } from "@toolpad/core";
-import { DashboardLayout, DashboardSidebarPageItem } from "@toolpad/core/DashboardLayout";
+import {NavigationPageItem} from "@toolpad/core";
+import {DashboardLayout, DashboardSidebarPageItem} from "@toolpad/core/DashboardLayout";
 
 import AppActions from "../appActions/AppActions";
 import AppTitle from "../appTitle/AppTitle";
 import Styles from "./Dashboard.styl";
 
 export const Dashboard = () => {
-    const renderPageItem = React.useCallback((item: NavigationPageItem, props: { mini: boolean }) => {
+    const renderPageItem = React.useCallback((item: NavigationPageItem, props: {mini: boolean}) => {
         return (
-            <div className="uppercase">
+            <div className="uppercase" data-testid={`sidebar-item-${item.title}`}>
                 <DashboardSidebarPageItem item={item} />
             </div>
         );
     }, []);
 
     return (
-        <div className={classNames(Styles.dashboard)}>
+        <div className={classNames(Styles.dashboard)} data-testid="dashboard">
             <DashboardLayout
                 renderPageItem={renderPageItem}
                 defaultSidebarCollapsed={true}
                 slots={{
                     appTitle: AppTitle,
                     toolbarActions: AppActions,
-
                     sidebarFooter: null,
-                }}
-            >
+                }}>
                 <Outlet />
             </DashboardLayout>
         </div>

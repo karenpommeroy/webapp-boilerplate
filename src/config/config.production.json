@@ -1,0 +1,6 @@
+{
+  "appName": "Webapp Boilerplate",
+  "environment": "production",
+  "port": 8080,
+  "url": "https://localhost"
+}

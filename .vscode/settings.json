@@ -11,11 +11,14 @@
   "[jsonc]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
+  "[stylus]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
@@ -34,9 +37,17 @@
     "json",
     "jsonc"
   ],
+  "files.exclude": {
+    "**/*.cache": true,
+    "**/*.log": true,
+    "**/.yarn": true,
+    "**/node_modules": true,
+    ".pnp.*": true
+  },
   "npm.packageManager": "yarn",
   "prettier.enable": true,
   "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
+  "prettier.requireConfig": true,
   "search.exclude": {
     "**/.pnp.*": true,
     "**/.yarn": true,

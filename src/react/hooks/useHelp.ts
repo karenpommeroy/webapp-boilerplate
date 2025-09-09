@@ -1,20 +1,21 @@
-import _toInteger from "lodash/toInteger";
-import _toString from "lodash/toString";
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import _toInteger from "lodash-es/toInteger";
+import _toString from "lodash-es/toString";
+import {useEffect, useState} from "react";
+import {useTranslation} from "react-i18next";
 
-import { useAppContext } from "../contexts/AppContext";
+import {useAppContext} from "../contexts/AppContext";
 
 const useHelp = () => {
-    const { state, actions } = useAppContext();
+    const {state, actions} = useAppContext();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [backdropEl, setBackdropEl] = useState<null | HTMLElement>(null);
-    const [help, setHelp] = useState<{ header: string; content: string | string[] }>({ header: "", content: "" });
-    const { t } = useTranslation();
+    const [help, setHelp] = useState<{header: string; content: string | string[]}>({header: "", content: ""});
+    const {t} = useTranslation();
 
     const createBackdropElement = (background = "rgba(0, 0, 0, 0.5)", filter = "blur(2px)") => {
         const backdrop = document.createElement("div");
 
+        backdrop.dataset.testid = "help-backdrop";
         backdrop.style.position = "absolute";
         backdrop.style.width = "100vw";
         backdrop.style.height = "100vh";
@@ -83,8 +84,8 @@ const useHelp = () => {
             return;
         }
 
-        const header = t(helpId + "Header", { ns: "help" });
-        const content: string | string[] = t(helpId + "Content", { ns: "help", returnObjects: true }) as
+        const header = t(helpId + "Header", {ns: "help"});
+        const content: string | string[] = t(helpId + "Content", {ns: "help", returnObjects: true}) as
             | string
             | string[];
 
@@ -93,7 +94,7 @@ const useHelp = () => {
 
         setBackdropEl(backdropElement);
         setAnchorEl(anchorElement);
-        setHelp({ header, content });
+        setHelp({header, content});
 
         event.stopPropagation();
         event.preventDefault();

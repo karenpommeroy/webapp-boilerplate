@@ -1,9 +1,9 @@
 import classNames from "classnames";
-import $_ from "lodash";
+import $_ from "lodash-es";
 import moment from "moment";
 import path from "path";
-import React, { HTMLAttributes, useState } from "react";
-import { useTranslation } from "react-i18next";
+import React, {HTMLAttributes, useState} from "react";
+import {useTranslation} from "react-i18next";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import {
@@ -18,7 +18,7 @@ import {
     useMediaQuery,
 } from "@mui/material";
 
-import { ComponentDisplayMode } from "../../common/ComponentDisplayMode";
+import {ComponentDisplayMode} from "../../common/ComponentDisplayMode";
 import Styles from "./LanguagePicker.styl";
 
 const isMac = process.platform === "darwin";
@@ -43,8 +43,8 @@ export type LanguagePickerItemProps = LanguagePickerProps & {
 };
 
 export const LanguagePicker = (props: LanguagePickerProps) => {
-    const { mode, showArrow = true, className, ...rest } = props;
-    const { i18n } = useTranslation();
+    const {mode, showArrow = true, className, ...rest} = props;
+    const {i18n} = useTranslation();
     const [loading, setLoading] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const langs = $_.get(i18n, "options.supportedLngs");
@@ -89,12 +89,11 @@ export const LanguagePicker = (props: LanguagePickerProps) => {
                 <Menu
                     anchorEl={anchorEl}
                     disablePortal={true}
-                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                    PopoverClasses={{ root: Styles.languagePickerBackdrop, paper: Styles.languagePickerMenu }}
-                    transformOrigin={{ vertical: -40, horizontal: "center" }}
+                    anchorOrigin={{vertical: "top", horizontal: "center"}}
+                    PopoverClasses={{root: Styles.languagePickerBackdrop, paper: Styles.languagePickerMenu}}
+                    transformOrigin={{vertical: -40, horizontal: "center"}}
                     open={Boolean(anchorEl)}
-                    onClose={onClose}
-                >
+                    onClose={onClose}>
                     {$_.map(availableLocales, (item) => (
                         <LanguagePickerItem key={item} lang={item} onClick={onItemClick} mode={displayMode} />
                     ))}
@@ -105,8 +104,8 @@ export const LanguagePicker = (props: LanguagePickerProps) => {
 };
 
 export const LanguagePickerTrigger = (props: LanguagePickerTriggerProps) => {
-    const { loading, onClick, mode, showArrow } = props;
-    const { i18n, t } = useTranslation();
+    const {loading, onClick, mode, showArrow} = props;
+    const {i18n, t} = useTranslation();
 
     return (
         <Button
@@ -118,7 +117,7 @@ export const LanguagePickerTrigger = (props: LanguagePickerTriggerProps) => {
             variant="text"
             disableElevation={true}
             color="inherit"
-        >
+            data-testid="language-picker-trigger">
             <span
                 className={Styles.icon}
                 style={{
@@ -127,9 +126,7 @@ export const LanguagePickerTrigger = (props: LanguagePickerTriggerProps) => {
             />
             {mode > ComponentDisplayMode.Compact && (
                 <React.Fragment>
-                    <span className={classNames("uppercase", Styles.name)}>
-                        {t("langName", { lng: i18n.language })}
-                    </span>
+                    <span className={classNames("uppercase", Styles.name)}>{t("langName", {lng: i18n.language})}</span>
                     {loading && <CircularProgress />}
                 </React.Fragment>
             )}
@@ -139,8 +136,8 @@ export const LanguagePickerTrigger = (props: LanguagePickerTriggerProps) => {
 };
 
 export const LanguagePickerItem = (props: LanguagePickerItemProps) => {
-    const { lang, onClick } = props;
-    const { t } = useTranslation();
+    const {lang, onClick} = props;
+    const {t} = useTranslation();
 
     return (
         <MenuItem key={lang} data-id={lang} onClick={() => onClick(lang)} className={Styles.languagePickerItem}>
@@ -150,7 +147,7 @@ export const LanguagePickerItem = (props: LanguagePickerItemProps) => {
                     backgroundImage: `url("${prependPath}/assets/locales/${lang}/flag.svg")`,
                 }}
             />
-            <span className={classNames("capitalize", Styles.name)}>{t("langName", { lng: lang })}</span>
+            <span className={classNames("capitalize", Styles.name)}>{t("langName", {lng: lang})}</span>
         </MenuItem>
     );
 };

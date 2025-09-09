@@ -2,50 +2,28 @@ import CircularDependencyPlugin from "circular-dependency-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
 import fs from "fs-extra";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import $_ from "lodash";
+import I18nextWebpackPlugin from "i18next-scanner-webpack";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import path from "path";
-import { Configuration, DefinePlugin, ProgressPlugin } from "webpack";
-import { Configuration as DevServerConfiguration } from "webpack-dev-server";
+import {Configuration, DefinePlugin, ProgressPlugin} from "webpack";
+import {BundleAnalyzerPlugin} from "webpack-bundle-analyzer";
+import {Configuration as DevServerConfiguration} from "webpack-dev-server";
 
-// const I18nextWebpackPlugin = require("i18next-scanner-webpack");
-
-export const isDevelopment = () => {
-    return $_.get(process, "env.NODE_ENV") === "development";
-};
-
-export const reportProgress = (percentage: number, message: string, ...args: any[]) => {
-    const stream = process.stderr;
-    const formatted = (percentage * 100).toFixed();
-
-    if (stream.isTTY && percentage < 1) {
-        stream.cursorTo(0);
-        stream.write(`${formatted}%: ${message}`);
-        stream.clearLine(1);
-    } else if (percentage === 1) {
-        stream.write("building done!");
-    }
-};
-
-export const getRoot = (...args: any[]) => {
-    const rootDir = path.resolve(__dirname);
-
-    args = Array.prototype.slice.call(args, 0);
-
-    return path.join.apply(path, [rootDir].concat(args));
-};
+import {getRoot, isDevelopment, reportProgress} from "./webpack.utils";
 
 export const webpackConfig: Configuration & DevServerConfiguration = {
     entry: getRoot("src", "index.tsx"),
+    output: {
+        filename: (pathData) => {
+            return pathData.chunk?.name === "vendors" ? "vendors.js" : "bundle.js";
+        },
+        publicPath: "/",
+        path: getRoot("dist"),
+        clean: true,
+    },
+    mode: isDevelopment() ? "development" : "production",
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".json", ".styl", ".css"],
         fallback: {
-            fs: false,
-            constants: false,
-            stream: false,
-            assert: false,
-            util: false,
-            buffer: false,
             path: require.resolve("path-browserify"),
             process: require.resolve("process/browser"),
         },
@@ -54,7 +32,7 @@ export const webpackConfig: Configuration & DevServerConfiguration = {
         rules: [
             {
                 test: /\.mjs$/,
-                include: /node_modules/,
+                include: [/node_modules/, /\.yarn/],
                 type: "javascript/auto",
             },
             {
@@ -67,18 +45,24 @@ export const webpackConfig: Configuration & DevServerConfiguration = {
                         },
                     },
                 ],
-                exclude: [/\.(test|spec|)\.ts$/, /node_modules$/, /[\\/]node_modules[\\/]$/, /\.yarn$/],
+                exclude: [
+                    /\.(test|spec|)\.ts$/,
+                    /node_modules$/,
+                    /[\\/]node_modules[\\/]$/,
+                    /\.yarn$/,
+                    /[\\/]\.yarn[\\/]$/,
+                ],
             },
             {
                 test: /\.js$/,
                 enforce: "pre",
                 loader: "source-map-loader",
-                exclude: [],
+                exclude: /react-zoom-pan-pinch/,
             },
             {
                 test: /\.json$/,
                 loader: "json-loader",
-                exclude: [getRoot(__dirname, "config"), /node_modules/],
+                exclude: [getRoot(__dirname, "config"), /[\\/]((node_modules)|(\.yarn))[\\/]/],
             },
             {
                 test: /\.css$/i,
@@ -129,7 +113,7 @@ export const webpackConfig: Configuration & DevServerConfiguration = {
                     },
                     {
                         loader: "stylus-loader",
-                        options: { sourceMap: true },
+                        options: {sourceMap: true},
                     },
                 ],
             },
@@ -137,13 +121,13 @@ export const webpackConfig: Configuration & DevServerConfiguration = {
                 test: /url\("([^)]+?\.(woff|eot|woff2|ttf|svg)[^"]*)"/,
                 exclude: [],
                 type: "asset/resource",
-                dependency: { not: ["url"] },
+                dependency: {not: ["url"]},
             },
             {
                 test: /[^)]+?\.(woff|eot|woff2|ttf|svg)[^"]*/,
                 exclude: [],
                 type: "asset/resource",
-                dependency: { not: ["url"] },
+                dependency: {not: ["url"]},
             },
             {
                 test: /[^)]+?\.(svg|png|jpg|gif)[^"]*/,
@@ -157,35 +141,20 @@ export const webpackConfig: Configuration & DevServerConfiguration = {
             },
         ],
     },
-    mode: "development",
-    output: {
-        path: getRoot("dist"),
-        pathinfo: false,
-        filename: "bundle.js",
-        clean: true,
-        publicPath: "/",
-    },
     optimization: {
-        removeAvailableModules: false,
-        removeEmptyChunks: false,
-        minimize: false,
+        removeAvailableModules: true,
+        removeEmptyChunks: true,
+        concatenateModules: true,
+        mergeDuplicateChunks: true,
+        minimize: !isDevelopment(),
         splitChunks: {
             chunks: "async",
-            maxSize: 20000,
-            minSize: 0,
-            minChunks: 1,
-            maxAsyncRequests: 6,
-            maxInitialRequests: 4,
-            automaticNameDelimiter: "~",
             cacheGroups: {
                 vendors: {
-                    test: /[\\/]node_modules[\\/]/,
-                    priority: -10,
-                },
-                default: {
-                    minChunks: 2,
-                    priority: -20,
-                    reuseExistingChunk: true,
+                    test: /[\\/]((node_modules)|(\.yarn[\\/]cache))[\\/]/,
+                    name: "vendors",
+                    chunks: "all",
+                    enforce: true,
                 },
             },
         },
@@ -194,6 +163,10 @@ export const webpackConfig: Configuration & DevServerConfiguration = {
         errorDetails: true,
     },
     devtool: "eval",
+    watchOptions: {
+        aggregateTimeout: 2000,
+        ignored: ["**/assets/locales/**/*"],
+    },
     devServer: {
         host: "localhost",
         client: {
@@ -205,6 +178,7 @@ export const webpackConfig: Configuration & DevServerConfiguration = {
             watch: {
                 aggregateTimeout: 500,
                 ignored: [
+                    ".yarn/**/*",
                     /node_modules\/(?!@core)/,
                     "node_modules/@core/**/node_modules/**/*",
                     /assets\/locales\/__.*\.json/,
@@ -227,9 +201,7 @@ export const webpackConfig: Configuration & DevServerConfiguration = {
     },
     plugins: [
         new DefinePlugin({
-            "process.env": {
-                NODE_ENV: JSON.stringify(process.env.NODE_ENV || "development"),
-            },
+            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
             "process.platform": JSON.stringify(process.platform),
         }),
         new ProgressPlugin(reportProgress),
@@ -240,10 +212,16 @@ export const webpackConfig: Configuration & DevServerConfiguration = {
                     to: "assets",
                     force: true,
                 },
+                {
+                    from: getRoot("src/config/", `config.${process.env.NODE_ENV}.json`),
+                    to: "config.json",
+                    force: true,
+                    noErrorOnMissing: false,
+                },
             ],
         }),
         new CircularDependencyPlugin({
-            exclude: /a\.js|node_modules/,
+            exclude: /node_modules|\.yarn/,
             failOnError: true,
             allowAsyncCycles: false,
             cwd: process.cwd(),
@@ -252,25 +230,33 @@ export const webpackConfig: Configuration & DevServerConfiguration = {
             title: "webapp",
             template: getRoot("public", "index.html"),
         }),
-        new MiniCssExtractPlugin({ filename: "bundle.css" }),
-        // new I18nextWebpackPlugin({
-        //     extensions: [".ts", ".tsx"],
-        //     dest: path.resolve("./"),
-        //     src: [path.resolve("./src")],
-        //     options: {
-        //         locales: ["en", "de", "pl"],
-        //         sort: true,
-        //         verbose: false,
-        //         failOnWarnings: false,
-        //         pluralSeparator: "_",
-        //         output: path.resolve("./assets/locales/$LOCALE/translation.json"),
-        //         indentation: 4,
-        //         i18nextOptions: {
-        //             debug: false
-        //         }
-        //     }
-        // })
+        new BundleAnalyzerPlugin({
+            analyzerHost: "localhost",
+            analyzerPort: 8888,
+            openAnalyzer: false,
+            reportTitle: "Web Application Boilerplate Bundle Analysis",
+        }),
+        new MiniCssExtractPlugin({
+            filename: "bundle.css",
+        }),
+        new I18nextWebpackPlugin({
+            extensions: [".ts", ".tsx"],
+            dest: getRoot("./"),
+            src: [getRoot("./src")],
+            options: {
+                locales: ["en-GB", "de-DE", "pl-PL"],
+                sort: true,
+                verbose: true,
+                failOnWarnings: false,
+                pluralSeparator: "_",
+                output: getRoot("./assets/locales/$LOCALE/translation.json"),
+                indentation: 2,
+                i18nextOptions: {
+                    debug: isDevelopment(),
+                },
+            },
+        }),
     ],
 };
 
-export default { ...webpackConfig };
+export default webpackConfig;

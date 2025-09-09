@@ -1,4 +1,4 @@
-import $_ from "lodash";
+import $_ from "lodash-es";
 
 export type TPartial<T> = {
     [P in keyof T]?: TPartial<T[P]>;
@@ -12,8 +12,8 @@ export const createNextNamespacedState = <T>(
     obj: T,
     assignments: TPartial<T> | T,
     namespace: string
-): { [key: string]: T } => {
-    return Object.assign({}, { [namespace]: $_.assign({}, obj, assignments) });
+): {[key: string]: T} => {
+    return Object.assign({}, {[namespace]: $_.assign({}, obj, assignments)});
 };
 
 export const removeFromNextState = <T extends object>(obj: T, path: string | string[]): T => {

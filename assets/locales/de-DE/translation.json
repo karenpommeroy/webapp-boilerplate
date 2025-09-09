@@ -1,3 +1,6 @@
 {
-  "appName": "WebApp"
+  "appName": "WebApp",
+  "home": "home",
+  "langName": "deutsch",
+  "settings": "Einstellungen"
 }

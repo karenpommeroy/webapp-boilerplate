@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Backdrop } from "@mui/material";
+import {Backdrop} from "@mui/material";
 
 export interface AppLoaderProps {
     width?: number;
@@ -8,12 +8,15 @@ export interface AppLoaderProps {
     imageSrc?: string;
 }
 
-export const AppLoader = (props: AppLoaderProps = { width: 180, height: 180, imageSrc: "/assets/img/loading.svg" }) => {
-    const { width, height, imageSrc } = props;
+export const AppLoader = (
+    props: AppLoaderProps = {width: 180, height: 180, imageSrc: "/assets/images/loading.svg"}
+) => {
+    const {width, height, imageSrc} = props;
 
     return (
         <Backdrop invisible={true} open={true}>
             <img
+                data-testid="app-loader"
                 src={imageSrc}
                 width={width}
                 height={height}

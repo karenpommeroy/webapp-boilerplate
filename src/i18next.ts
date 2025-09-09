@@ -1,50 +1,31 @@
-import fs from "fs-extra";
 import i18next from "i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
 import i18nextBackend from "i18next-http-backend";
-import _forEach from "lodash/forEach";
-import _isUndefined from "lodash/isUndefined";
-import _replace from "lodash/replace";
-import _without from "lodash/without";
-import path from "path";
-import { initReactI18next } from "react-i18next";
+import {initReactI18next} from "react-i18next";
 
 const isMac = process.platform === "darwin";
-const isDev = process.env.NODE_ENV === "development";
-// const prependPath = isMac && !isDev ? path.join("./assets", "..") :  ".";
-const localePath = _replace(
-    !isDev ? path.join("./assets", "locales") : path.join(__dirname, "assets", "locales"),
-    /\\/g,
-    "/"
-);
+// const prependPath = isMac && !isDevelopment() ? path.join("./assets", "..") : ".";
+// const localePath = replace(
+//     !isDevelopment() ? path.join("./assets", "locales") : path.join(__dirname, "assets", "locales"),
+//     /\\/g,
+//     "/"
+// );
 
 i18next
+    .use(LanguageDetector)
     .use(i18nextBackend)
     .use(initReactI18next)
     .init({
         backend: {
-            loadPath: localePath + "/{{lng}}/{{ns}}.json",
-            // addPath: prependPath + "./assets/locales/{{lng}}/{{ns}}.missing.json",
+            loadPath: "../" + "./assets/locales/{{lng}}/{{ns}}.json",
         },
-
-        lng: "en-GB",
+        detection: {
+            order: ["querystring", "cookie", "localStorage", "navigator"],
+            caches: ["localStorage"],
+        },
         preload: ["en-GB", "de-DE", "pl-PL"],
         debug: false,
-        saveMissing: false, // process.env.NODE_ENV === "development",
-        // missingKeyHandler: (lngs, ns, key) => {
-        //     _forEach(_without(i18next.options.supportedLngs as string[], "cimode"), (lng) => {
-        //         const targetPath = prependPath + `./assets/locales/${lng}/${ns}.json`;
-        //         if (!fs.existsSync(targetPath)) {
-        //             fs.writeJSONSync(targetPath, {}, {spaces: 4});
-        //         }
-
-        //         const data = fs.readJsonSync(targetPath);
-
-        //         if (!_isUndefined(data[key])) return;
-
-        //         data[key] = "";
-        //         fs.writeJSONSync(targetPath, data, {spaces: 4});
-        //     });
-        // },
+        saveMissing: false,
         saveMissingTo: "all",
         load: "currentOnly",
         returnEmptyString: false,

@@ -1,0 +1,53 @@
+const { use } = require("react");
+
+module.exports = {
+    tabWidth: 4,
+    useTabs: false,
+    singleQuote: false,
+    trailingComma: "es5",
+    printWidth: 120,
+    semi: true,
+
+    overrides: [
+        {
+            files: ["*.ts", "*.tsx"],
+            options: {
+                parser: "typescript",
+                tabWidth: 4,
+                singleQuote: false,
+                semi: true,
+                arrowParens: "always",
+                bracketSameLine: true,
+                bracketSpacing: false,
+                endOfLine: "auto",
+                singleAttributePerLine: false,
+                trailingComma: "es5",
+                jsxBracketSameLine: true,
+                jsxSingleQuote: false,
+            },
+        },
+        {
+            files: ["*.styl"],
+            options: {
+                parser: "stylus",
+                plugins: [require.resolve("prettier-plugin-stylus-formatter")],
+                tabWidth: 4,
+                singleQuote: false,
+                semi: true,
+                useTabs: false,
+                stylusOptions: {
+                    insertColons: true,
+                    insertSemicolons: true,
+                    insertBraces: true,
+                    singleAttributePerLine: true,
+                    preserveNewLinesBetweenPropertyValues: false,
+                    sortProperties: "grouped",
+                    insertSpaceBeforeComment: true,
+                    insertSpaceAfterComma: true,
+                    insertLeadingZeroBeforeFraction: true,
+                    reduceMarginAndPaddingValues: true,
+                },
+            },
+        },
+    ],
+};
