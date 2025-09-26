@@ -1,5 +1,5 @@
-@import "./styles/mixins.styl"
-@import "./styles/fonts.styl"
+@import "./styles/mixins.styl";
+@import "./styles/fonts.styl";
 
 html {
     font-size: 1rem;
@@ -9,7 +9,7 @@ html {
         margin: 0;
         padding: 0;
         no-select();
-        
+
         :global(#root) {
             position: absolute;
             width: 100%;
@@ -18,19 +18,19 @@ html {
         }
 
         .app {
-            background-color: var(--theme-palette-background-paper);
+            background-color: var(--theme-palette-background-default);
             display: flex;
             flex-direction: column;
             height: 100vh;
             width: 100vw;
             position: absolute;
             z-index: 0;
-            
+
             &.help {
                 cursor: help !important;
             }
         }
-        
+
         .help-popup {
             z-index: 9999999;
             padding: 12px;
@@ -50,7 +50,7 @@ html {
                         margin-bottom: 0;
                     }
                 }
-            } 
+            }
         }
     }
 }

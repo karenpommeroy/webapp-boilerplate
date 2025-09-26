@@ -64,6 +64,7 @@ const config: Linter.Config[] = [
             "no-unused-vars": "off",
             "function-paren-newline": "off",
             "function-call-argument-newline": "off",
+
             // Prettier formatting rules
             "prettier/prettier": ["error"],
 

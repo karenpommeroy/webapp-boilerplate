@@ -1,6 +1,13 @@
 {
   "appName": "WebApp",
+  "error": "błąd",
   "home": "główna",
+  "info": "informacja",
   "langName": "polski",
-  "settings": "ustawienia"
+  "primary": "podstawowy",
+  "secondary": "drugorzędny",
+  "settings": "ustawienia",
+  "success": "powodzenie",
+  "theme": "theme",
+  "warning": "ostrzeżenie"
 }

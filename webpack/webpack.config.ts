@@ -45,18 +45,19 @@ export const webpackConfig: Configuration & DevServerConfiguration = {
                         },
                     },
                 ],
-                exclude: [/\.(test|spec|)\.ts$/, /node_modules$/, /[\\/]node_modules[\\/]$/, /\.yarn$/, /[\\/]\.yarn[\\/]$/],
+                exclude: [
+                    /\.(test|spec|)\.ts$/,
+                    /node_modules$/,
+                    /[\\/]node_modules[\\/]$/,
+                    /\.yarn$/,
+                    /[\\/]\.yarn[\\/]$/,
+                ],
             },
             {
                 test: /\.js$/,
                 enforce: "pre",
                 loader: "source-map-loader",
                 exclude: /react-zoom-pan-pinch/,
-            },
-            {
-                test: /\.json$/,
-                loader: "json-loader",
-                exclude: [getRoot(__dirname, "config"), /[\\/]((node_modules)|(\.yarn))[\\/]/],
             },
             {
                 test: /\.css$/i,
@@ -171,7 +172,12 @@ export const webpackConfig: Configuration & DevServerConfiguration = {
             publicPath: "/",
             watch: {
                 aggregateTimeout: 500,
-                ignored: [".yarn/**/*", /node_modules\/(?!@core)/, "node_modules/@core/**/node_modules/**/*", /assets\/locales\/__.*\.json/],
+                ignored: [
+                    ".yarn/**/*",
+                    /node_modules\/(?!@core)/,
+                    "node_modules/@core/**/node_modules/**/*",
+                    /assets\/locales\/__.*\.json/,
+                ],
             },
         },
 
@@ -235,7 +241,7 @@ export const webpackConfig: Configuration & DevServerConfiguration = {
             options: {
                 locales: ["en-GB", "de-DE", "pl-PL"],
                 sort: true,
-                verbose: true,
+                verbose: false,
                 failOnWarnings: false,
                 pluralSeparator: "_",
                 output: getRoot("./assets/locales/$LOCALE/translation.json"),

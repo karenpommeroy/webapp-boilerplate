@@ -81,8 +81,6 @@ export default {
 
     // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
     moduleNameMapper: {
-        "@core/web": "<rootDir>/../../../core/web/src/",
-        "@core/common": "<rootDir>/../../../core/common/src/",
         "\\.(css|less|scss|styl)$": "identity-obj-proxy",
     },
 

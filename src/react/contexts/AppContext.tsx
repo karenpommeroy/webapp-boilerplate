@@ -1,4 +1,5 @@
 import React, {createContext, FC, ReactNode, useReducer} from "react";
+import {useLocalStorage} from "usehooks-ts";
 
 import {ColorMode} from "../../common/Theme";
 import {actions} from "../actions/AppActions";
@@ -25,9 +26,23 @@ const AppContext = createContext<IAppContext | undefined>(undefined);
 export const AppContextProvider: FC<IAppContextProviderProps> = (props: any) => {
     const [reducerState, dispatch] = useReducer(reducer, createDefaultState());
     const reducerActions = actions(dispatch);
+
+    const [theme, setTheme] = useLocalStorage<string>("appTheme", reducerState.theme);
+    const [mode, setMode] = useLocalStorage<ColorMode>("appMode", reducerState.mode);
+
     const context: IAppContext = {
-        state: {...reducerState},
-        actions: {...reducerActions},
+        state: {...reducerState, theme, mode},
+        actions: {
+            ...reducerActions,
+            setTheme: (t: string) => {
+                setTheme(t);
+                reducerActions.setTheme(t);
+            },
+            setMode: (m: ColorMode) => {
+                setMode(m);
+                reducerActions.setMode(m);
+            },
+        },
     };
 
     return <AppContext.Provider value={context}>{props.children}</AppContext.Provider>;

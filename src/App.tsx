@@ -1,23 +1,25 @@
 import classNames from "classnames";
 import {isArray, map, split, without} from "lodash-es";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Outlet} from "react-router-dom";
 
 import {Box, CssBaseline, Paper, Popper, Typography} from "@mui/material";
-import {createTheme} from "@mui/material/styles";
+import {createTheme, Theme} from "@mui/material/styles";
 import {ReactRouterAppProvider} from "@toolpad/core/react-router";
 
 import Styles from "./App.styl";
 import {getNavigation} from "./Navigation";
 import {useAppContext} from "./react/contexts/AppContext";
 import useHelp from "./react/hooks/useHelp";
-import {getThemeDefinition} from "./theme/Theme";
+import {themeDefinitions} from "./themes/Theme";
 
 export const App: React.FC = () => {
     const {state} = useAppContext();
     const {anchorEl, help} = useHelp();
     const {i18n} = useTranslation();
+    const [theme, setTheme] = useState<Theme>();
+
     const renderLineBreaks = (value: string) => {
         return map(split(value, "\n"), (v, k) => (
             <React.Fragment key={k}>
@@ -33,14 +35,21 @@ export const App: React.FC = () => {
         return map(valueArray, (v, k) => <p key={k}>{renderLineBreaks(v)}</p>);
     };
 
-    const theme = createTheme({
-        cssVariables: {
-            colorSchemeSelector: "data-theme-mode",
-            cssVarPrefix: "theme",
-            rootSelector: ":root",
-        },
-        ...getThemeDefinition("Sky"),
-    });
+    useEffect(() => {
+        if (!state.theme) return;
+
+        const themeDef = themeDefinitions[state.theme];
+        const theme = createTheme({
+            cssVariables: {
+                colorSchemeSelector: "data-theme-mode",
+                cssVarPrefix: "theme",
+                rootSelector: ":root",
+            },
+            ...themeDef,
+        });
+
+        setTheme(theme);
+    }, [state.theme]);
 
     return (
         <ReactRouterAppProvider navigation={getNavigation()} theme={theme} window={window}>

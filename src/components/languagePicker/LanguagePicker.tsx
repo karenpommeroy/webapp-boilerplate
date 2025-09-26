@@ -5,7 +5,17 @@ import React, {HTMLAttributes, useState} from "react";
 import {useTranslation} from "react-i18next";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import {Box, BoxProps, Button, CircularProgress, ClickAwayListener, Menu, MenuItem, Theme, useMediaQuery} from "@mui/material";
+import {
+    Box,
+    BoxProps,
+    Button,
+    CircularProgress,
+    ClickAwayListener,
+    Menu,
+    MenuItem,
+    Theme,
+    useMediaQuery,
+} from "@mui/material";
 
 import {ComponentDisplayMode} from "../../common/ComponentDisplayMode";
 import Styles from "./LanguagePicker.styl";
@@ -36,7 +46,9 @@ export const LanguagePicker = (props: LanguagePickerProps) => {
     const availableLocales: string[] = !langs ? [] : without(langs, "cimode").sort();
     const displayMode = defaultTo(
         mode,
-        useMediaQuery((theme: Theme) => theme.breakpoints.down("md")) ? ComponentDisplayMode.Minimal : ComponentDisplayMode.Full
+        useMediaQuery((theme: Theme) => theme.breakpoints.down("md"))
+            ? ComponentDisplayMode.Minimal
+            : ComponentDisplayMode.Full
     );
 
     const onClose = () => setAnchorEl(null);
@@ -54,7 +66,6 @@ export const LanguagePicker = (props: LanguagePickerProps) => {
             setLoading(true);
             i18n.changeLanguage(lang, () => setLoading(false));
             moment.locale(lang);
-            // global.store.set("mixr.language", lang);
         }
 
         onClose();
@@ -62,7 +73,12 @@ export const LanguagePicker = (props: LanguagePickerProps) => {
 
     return (
         <Box className={classNames(Styles.languagePicker, className)} {...rest}>
-            <LanguagePickerTrigger showArrow={showArrow} mode={displayMode} loading={loading} onClick={onTriggerClick} />
+            <LanguagePickerTrigger
+                showArrow={showArrow}
+                mode={displayMode}
+                loading={loading}
+                onClick={onTriggerClick}
+            />
             <ClickAwayListener onClickAway={onClickAway}>
                 <Menu
                     anchorEl={anchorEl}

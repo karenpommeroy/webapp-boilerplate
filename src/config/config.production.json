@@ -2,5 +2,6 @@
   "appName": "Webapp Boilerplate",
   "environment": "production",
   "port": 8080,
+  "themes": ["SunsetSky", "PinkFloyd", "OceanWaves"],
   "url": "https://localhost"
 }

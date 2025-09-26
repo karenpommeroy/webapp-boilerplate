@@ -12,7 +12,7 @@ export interface IAppState {
 export const createDefaultState = () => {
     return StateCreator.create<IAppState>({
         location: "/",
-        theme: "purple-rain",
+        theme: "SunsetSky",
         mode: ColorMode.Light,
         loading: false,
         help: false,

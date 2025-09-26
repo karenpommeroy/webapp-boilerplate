@@ -3,6 +3,7 @@ export interface IConfiguration {
     url: string;
     port: number;
     environment: string;
+    themes: string[];
 }
 
 export const getConfiguration = <TConfig>(url: string): Promise<TConfig> => {

@@ -42,7 +42,7 @@ export const ThemeSwitcher = (props: IThemeSwitcherProps) => {
     };
 
     return (
-        <IconButton className={classNames(Styles.themeSwitcher, className)} onClick={onChangeMode} {...rest}>
+        <IconButton color="primary" className={classNames(Styles.themeSwitcher, className)} onClick={onChangeMode} {...rest}>
             {resolveIcon(mode)}
         </IconButton>
     );

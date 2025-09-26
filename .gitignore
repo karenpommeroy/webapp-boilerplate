@@ -7,7 +7,6 @@ coverage/*
 !.yarn/sdks
 !.yarn/versions
 
-# Playwright
 node_modules/
 /test-results/
 /playwright-report/

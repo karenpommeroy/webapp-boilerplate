@@ -9,6 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import ComponentDisplayMode from "../../common/ComponentDisplayMode";
 import {useAppContext} from "../../react/contexts/AppContext";
 import LanguagePicker from "../languagePicker/LanguagePicker";
+import ThemeSelector from "../themeSelector/ThemeSelector";
 import ThemeSwitcher from "../themeSwitcher/ThemeSwitcher";
 import Styles from "./AppActions.styl";
 
@@ -22,7 +23,7 @@ const AppActions = () => {
     return (
         <Stack direction="row" alignItems="center" className={Styles.appActions} gap={1} data-testid="app-actions">
             <IconButton
-                color="inherit"
+                color="primary"
                 data-help="help-toggle"
                 data-testid="help-toggle"
                 className={classNames(Styles.icon, Styles.help, {[Styles.active]: state.help})}
